@@ -41,6 +41,7 @@ function fieldBlock(name: string, value: string): string {
 function activeFields(
   body: string,
   separator: string,
+  encoding = 1,
 ): { question: string; answer: string } {
   const start = body.indexOf(START),
     end = body.indexOf(END);
@@ -64,17 +65,14 @@ function activeFields(
       (line, i) => i > at && /^(?:来源|Source)[:：]|<!--SR:/.test(line),
     );
   if (aEnd < 0) aEnd = lines.length;
-  return {
-    question: lines
-      .slice(qStart + 1, at)
-      .join("\n")
-      .trim(),
-    answer: lines
-      .slice(at + 1, aEnd)
-      .join("\n")
-      .trim()
-      .replace(/\n<br>$/, ""),
-  };
+  const question = lines.slice(qStart + 1, at).join("\n");
+  const answer = lines.slice(at + 1, aEnd).join("\n");
+  return encoding === 2
+    ? { question, answer }
+    : {
+        question: question.trim(),
+        answer: answer.trim().replace(/\n<br>$/, ""),
+      };
 }
 export function scheduleFrom(text: string): string {
   return (text.match(/<!--SR:[\s\S]*?-->/g) ?? []).join("\n");
@@ -102,12 +100,19 @@ export function parseRecord(
   const kind = f.study_flow_kind,
     id = str(f.study_flow_id);
   if (!kind && !f.study_flow_id && !f.study_flow_schema) return null;
-  if (!id || f.study_flow_schema !== 1)
+  if (!id || (f.study_flow_schema !== 1 && f.study_flow_schema !== 2))
     throw new FlowError(
       "unsupported",
       "Unsupported or incomplete Study Flow schema. Keep the original file and repair its properties or use a compatible plugin version.",
     );
   const base = { id, path, revision: "" };
+  const encoding = f.study_flow_text_encoding ?? 1;
+  if (
+    (encoding !== 1 && encoding !== 2) ||
+    (f.study_flow_schema === 2 && encoding !== 2) ||
+    (f.study_flow_schema === 1 && encoding !== 1)
+  )
+    throw new FlowError("unsupported", "Unsupported Study Flow text encoding.");
   let record: Record;
   if (kind === "book") {
     record = {
@@ -142,13 +147,13 @@ export function parseRecord(
       bookPath: unwrapLink(f.study_flow_book_path),
       page: num(f.study_flow_page, 1),
       subpath: str(f.study_flow_subpath),
-      quote: decodeCardText(quote),
-      reflection: decodeCardText(reflection),
+      quote: decodeCardText(quote, "?", encoding),
+      reflection: decodeCardText(reflection, "?", encoding),
       fingerprint: str(f.study_flow_fingerprint),
       state:
         f.study_flow_state === "archived"
           ? "archived"
-          : hasMeaning(decodeCardText(reflection))
+          : hasMeaning(decodeCardText(reflection, "?", encoding))
             ? "understood"
             : "inbox",
       createdAt: str(f.study_flow_created_at),
@@ -170,7 +175,7 @@ export function parseRecord(
       status === "active"
         ? legacyFields?.question !== null && legacyFields?.answer !== null
           ? legacyFields
-          : activeFields(body, str(f.study_flow_separator, "?"))
+          : activeFields(body, str(f.study_flow_separator, "?"), encoding)
         : null;
     const question =
       status === "draft"
@@ -192,11 +197,15 @@ export function parseRecord(
       question:
         status === "draft"
           ? question
-          : decodeCardText(question, str(f.study_flow_separator, "?")),
+          : decodeCardText(
+              question,
+              str(f.study_flow_separator, "?"),
+              encoding,
+            ),
       answer:
         status === "draft"
           ? answer
-          : decodeCardText(answer, str(f.study_flow_separator, "?")),
+          : decodeCardText(answer, str(f.study_flow_separator, "?"), encoding),
       deckTag: str(f.study_flow_deck),
       excerptId: str(f.study_flow_excerpt),
       bookId: str(f.study_flow_book),
@@ -229,29 +238,49 @@ export function recordRevision(record: Record): string {
   return revision(rest);
 }
 // Encoding also keeps excerpts/understanding out of folder-based SR decks.
+function escapedCardLine(line: string): string {
+  return line
+    .replace(/\\/g, "\\\\")
+    .replace(/::/g, "\\:\\:")
+    .replace(/==/g, "\\=\\=");
+}
 export function cardText(text: string, separator = "?"): string {
+  if (/<!--\s*(?:study-flow:|SR:)/.test(text))
+    throw new FlowError(
+      "invalid",
+      "Text contains reserved Study Flow or SR control comments. Remove those comments before saving.",
+    );
   return text
     .replace(/\r\n?/g, "\n")
     .split("\n")
     .map((line) => {
       if (!line.trim()) return "<br>";
+      if (line.trim() === "<br>") return line.replace("<br>", "\\<br>");
       if (line.trim() === separator || line.trim() === separator + separator)
-        return `\\${line}`;
-      return line.replace(/::/g, "\\:\\:").replace(/==/g, "\\=\\=");
+        return `\\${escapedCardLine(line)}`;
+      return escapedCardLine(line);
     })
     .join("\n");
 }
-export function decodeCardText(text: string, separator = "?"): string {
+export function decodeCardText(
+  text: string,
+  separator = "?",
+  encoding = 2,
+): string {
+  const separators = [separator, separator + separator].map((value) =>
+    encoding === 2 ? escapedCardLine(value) : value,
+  );
   return text
     .split("\n")
     .map((line) =>
       line === "<br>"
         ? ""
-        : (line.startsWith("\\") &&
-          [separator, separator + separator].includes(line.slice(1).trim())
-            ? line.slice(1)
-            : line
-          ).replace(/\\([:=])/g, "$1"),
+        : encoding === 2 && line.trim() === "\\<br>"
+          ? line.replace("\\<br>", "<br>")
+          : (line.startsWith("\\") && separators.includes(line.slice(1).trim())
+              ? line.slice(1)
+              : line
+            ).replace(encoding === 2 ? /\\([\\:=])/g : /\\([:=])/g, "$1"),
     )
     .join("\n");
 }
@@ -262,9 +291,10 @@ export function serialize(
 ): string {
   const { data: f, body } = frontmatter(previous, yaml);
   Object.assign(f, {
-    study_flow_schema: 1,
+    study_flow_schema: 2,
     study_flow_kind: record.kind,
     study_flow_id: record.id,
+    study_flow_text_encoding: 2,
   });
   let managed: string;
   if (record.kind === "book") {

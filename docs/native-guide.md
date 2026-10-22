@@ -4,7 +4,7 @@
 
 ## 安装：不需要 Node 或 QuickAdd
 
-v0.2 是原生桌面插件预览，尚未正式发布或上架社区市场。安装包来自本功能 PR 的 [Actions 构建产物](https://github.com/crown-sports/obsidian-study-flow/actions)。登录 GitHub，打开对应运行，下载任一通过验证的平台 artifact，解压后可见三个 ZIP 和 `SHA256SUMS`。
+v0.2.0 从 [GitHub 发布页](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.0) 下载，尚未上架 Obsidian 社区市场。选择下面一种 ZIP，并下载 `SHA256SUMS` 核对文件。macOS/Linux 可运行 `shasum -a 256 文件名.zip`，Windows PowerShell 可运行 `Get-FileHash 文件名.zip -Algorithm SHA256`，将结果与清单内同名文件对照。
 
 | 包 | 用途 |
 | --- | --- |
@@ -86,3 +86,7 @@ v0.2 是原生桌面插件预览，尚未正式发布或上架社区市场。安
 SR 默认语法、普通正向多行卡、自定义多行问答分隔符和文件夹卡组已覆盖。自定义行内分隔符、卡片结束标记、自定义挖空模式、独立代码围栏与非 NOTES 调度存储尚未支持发布，界面会说明原因并允许存草稿；不会自动改第三方配置。
 
 开发者从源码构建：Node 20+，运行 `npm ci`、`npm run check`、`npm test`、`npm run package`。产物在 `dist/`，安装无需携带 `node_modules`。架构和对外接口见 [architecture.md](architecture.md)。
+
+## 从预览版本升级
+
+关闭 Obsidian，备份笔记库，将新版插件 ZIP 中的 `main.js`、`manifest.json`、`styles.css`、`LICENSE` 替换到 `.obsidian/plugins/study-flow/`，保留现有 `data.json`。重新打开后运行“重建学习索引”。v0.2.0 保存的记录使用 schema 2 / text encoding 2；旧 schema 1 记录可读，保存时升级。旧预览插件会拒绝 schema 2，请勿降级后继续编辑新版记录。已有 SR 调度保持。

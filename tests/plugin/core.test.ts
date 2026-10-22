@@ -17,6 +17,8 @@ import {
   parseRecord,
   serialize,
   END,
+  cardText,
+  decodeCardText,
 } from "../../src/core/markdown";
 import { AttachmentSession } from "../../src/core/attachment";
 import { parse as srParse } from "../fixtures/sr-1.15.4/parser";
@@ -83,6 +85,117 @@ const selection = {
   subpath: "#page=2&selection=0,0,1,4",
   text: "主动回忆的原文。",
 };
+test("literal backslashes, HTML breaks and escaped SR syntax survive repeated card and excerpt edits", async () => {
+  const value = String.raw`path\:value
+\:\: and \=\= and \\
+<br>
+\<br>
+?
+:: ==
+
+last line`;
+  assert.equal(decodeCardText(cardText(value)), value);
+  const { service, vault } = environment();
+  const capture = await service.capture({ ...selection, text: value });
+  const excerpt = (await service.read(capture.id)) as Excerpt;
+  assert.equal(excerpt.quote, value);
+  await service.saveReflection(excerpt.id, value, excerpt.revision);
+  assert.equal(((await service.read(excerpt.id)) as Excerpt).reflection, value);
+  const card = {
+    ...service.newCard(),
+    status: "active" as const,
+    question: value,
+    answer: value,
+  };
+  await service.saveCard(card);
+  const questions = srParse(
+    frontmatter(await vault.read(card.path), yaml).body,
+    {
+      singleLineCardSeparator: "::",
+      singleLineReversedCardSeparator: ":::",
+      multilineCardSeparator: "?",
+      multilineReversedCardSeparator: "??",
+      multilineCardEndMarker: "",
+      clozePatterns: ["==[123;;]answer[;;hint]=="],
+    },
+  );
+  assert.equal(questions.length, 1);
+  const schedule = "<!--SR:!2026-10-22,4,250-->";
+  await vault.process(card.path, (text) =>
+    text.replace(END, schedule + "\n" + END),
+  );
+  for (let i = 0; i < 3; i++) {
+    const saved = (await service.read(card.id)) as Card;
+    assert.equal(saved.question, value);
+    assert.equal(saved.answer, value);
+    assert.equal(saved.schedule, schedule);
+    await service.saveCard(saved, saved.revision);
+  }
+  assert.equal(
+    frontmatter(await vault.read(card.path), yaml).data
+      .study_flow_text_encoding,
+    2,
+  );
+});
+test("unversioned cards use the legacy decoder; unknown encodings and control comments fail clearly", async () => {
+  const { service, vault } = environment();
+  const card = {
+    ...service.newCard(),
+    status: "active" as const,
+    question: "question",
+    answer: "a::b\n\nnext",
+  };
+  await service.saveCard(card);
+  await vault.process(card.path, (text) =>
+    text
+      .replace("study_flow_text_encoding: 2\n", "")
+      .replace("study_flow_schema: 2", "study_flow_schema: 1"),
+  );
+  assert.equal(((await service.read(card.id)) as Card).answer, card.answer);
+  const before = await vault.read(card.path);
+  await assert.rejects(service.saveCard({ ...card, answer: END }), /reserved/);
+  assert.equal(await vault.read(card.path), before);
+  const unknown = before.replace(
+    "study_flow_schema: 1",
+    "study_flow_schema: 1\nstudy_flow_text_encoding: 999",
+  );
+  assert.throws(
+    () => parseRecord(card.path, unknown, yaml),
+    /Unsupported Study Flow text encoding/,
+  );
+  assert.throws(
+    () =>
+      parseRecord(
+        card.path,
+        before.replace("study_flow_schema: 1", "study_flow_schema: 2"),
+        yaml,
+      ),
+    /Unsupported Study Flow text encoding/,
+  );
+  const upgraded = serialize(card, yaml, before);
+  assert.equal(frontmatter(upgraded, yaml).data.study_flow_schema, 2);
+  assert.equal(frontmatter(upgraded, yaml).data.study_flow_text_encoding, 2);
+});
+test("versioned managed fields preserve literal breaks, whitespace and terminal newlines", () => {
+  const { service } = environment();
+  for (const value of [
+    "  <br>  ",
+    "answer\n",
+    "  code\nend  ",
+    "answer\n\n",
+    "\\<br>",
+  ]) {
+    const card = {
+      ...service.newCard(),
+      status: "active" as const,
+      question: value,
+      answer: value,
+    };
+    const parsed = parseRecord(card.path, serialize(card, yaml), yaml) as Card;
+    assert.equal(parsed.question, value);
+    assert.equal(parsed.answer, value);
+  }
+});
 test("concurrent capture creates one book and one excerpt; changed source keeps a new snapshot", async () => {
   const { service } = environment();
   const [a, b] = await Promise.all([
@@ -555,14 +668,14 @@ test("unsupported schemas and duplicate IDs report original paths; malformed edi
   vault.files.delete(copy);
   service.index.remove(copy);
   await vault.process(saved.path, (text) =>
-    text.replace("study_flow_schema: 1", "study_flow_schema: 99"),
+    text.replace("study_flow_schema: 2", "study_flow_schema: 99"),
   );
   await service.index.refresh(saved.path);
   assert.equal(service.index.records.has(saved.path), false);
   assert.equal(service.index.issues.has(saved.path), true);
   assert.equal(
     await vault.read(saved.path),
-    original.replace("study_flow_schema: 1", "study_flow_schema: 99"),
+    original.replace("study_flow_schema: 2", "study_flow_schema: 99"),
   );
   vault.files.set(saved.path, original);
   await service.index.refresh(saved.path);
