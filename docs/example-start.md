@@ -14,6 +14,15 @@ Capture first, understand later, then make cards for what matters.
 5. 在 **今日复习** 打开 SR 原生复习。先回忆，再显示答案，评分；答案背面可以返回原文。
    Open native SR from **Review**. Recall, reveal, rate and return to the source from the card back.
 
+**做完后检查 / Check your first result**
+
+- 收件箱有原文和自己的理解；例如“看着熟悉，不等于能独立回答”。
+  The Inbox contains the source and your reflection, for example “Recognition is not recall.”
+- 问题可以是“为什么重读不等于记住？”，答案用自己的话。发布后在今日复习中回答并评分；草稿不进入复习。
+  Try “Why is rereading different from remembering?” Answer in your own words, publish, then recall and rate it in Review. Drafts stay out.
+- 从卡片背面的来源链接返回 PDF。没有看到卡片时，检查已发布、SR 已启用，以及所选卡组包含这张卡片。
+  Follow the source link back to the PDF. If the card is absent, check publication, SR enablement and the selected deck.
+
 已开始学习的 PDF 会自动保存页码；读完状态由你标记。文件都保存在本地 Markdown，可以手工编辑、同步和导出。
 Reading progress is saved for PDFs you have started. Mark books finished yourself. Your Markdown files remain editable, syncable and exportable.
 
