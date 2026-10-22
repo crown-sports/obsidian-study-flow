@@ -17,9 +17,9 @@ flowchart LR
 
 ## 五分钟开始
 
-v0.2 目前是功能 PR 交付的预览版本，尚未正式发布或上架社区市场。
+v0.2.0 通过 [GitHub Releases](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.0) 分发；尚未上架 Obsidian 社区市场。
 
-1. 从对应 PR 的通过验证的 [Actions 运行](https://github.com/crown-sports/obsidian-study-flow/actions) 下载构建 artifact，解压后选择 `obsidian-study-flow-example-v0.2.0.zip`。
+1. 从 [v0.2.0 发布页](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.0) 下载 `obsidian-study-flow-example-v0.2.0.zip` 和 `SHA256SUMS`，核对 SHA-256 后解压。
 2. 解压，将 `Study-Flow-Example` 作为 Obsidian 新库打开，启用 **Study Flow**。
 3. 从社区市场安装并启用 **PDF++**、**Spaced Repetition**。工作台显示依赖状态，并提供安装入口。
 4. 点击 🎓，保存默认配置。打开原创示例 PDF，选中文字，运行 **Study Flow: 保存 PDF 选区**。

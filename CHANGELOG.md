@@ -1,11 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 - 2026-10-22
 
 - Preserve literal backslashes, escaped separators and literal `<br>` lines across repeated card/excerpt edits. New saves use schema 2 and an explicit text encoding; schema 1 notes retain the legacy decoder until saved. Older previews reject the new schema instead of silently rewriting it.
 - Reject reserved control comments in encoded text before overwriting a learning record, and reject unknown text encodings.
 
-## 0.2.0 preview - 2026-10-05
 
 - 原生桌面插件、crown 品牌、中英文工作台、设置与依赖安装入口。
 - PDF 即时选区快照、独立摘录收件箱、理解、多卡片草稿与发布。
@@ -17,7 +16,7 @@
 - 原生插件 / 原生示例库 / 旧宏库三种安装包、SHA-256、三平台 CI。
 - 中英文原生教程、正式架构、原创双语 PDF 与真实应用截图。
 
-This is a feature-PR preview. Formal release and community submission follow acceptance.
+GitHub release with native plugin, example vault and legacy starter ZIPs. Community Plugin listing is not included; install the downloaded plugin manually.
 
 ## 0.1.0 - 2026-10-04
 

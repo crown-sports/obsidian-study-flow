@@ -6,7 +6,7 @@
 
 The native desktop plugin has an English and Chinese workbench. Each book overview, excerpt and card is an independent Markdown file with a stable ID. Capture without interrupting reading, organize excerpts later, and publish only after previewing a meaningful question and answer. Reviewed cards keep their paths, IDs and scheduling comments when edited.
 
-v0.2 is a feature-PR preview; no formal release or community listing has been published yet. Download a passing PR Actions artifact and open the extracted `Study-Flow-Example` vault, or copy the plugin ZIP’s `study-flow` folder into an existing vault’s `.obsidian/plugins/`. Enable Study Flow, install **PDF++** and **Spaced Repetition** from Community Plugins, then save the workbench defaults. No Node, JSON editing, QuickAdd or API key is needed for native use.
+Download the v0.2.0 example or plugin ZIP and `SHA256SUMS` from [GitHub Releases](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.0), verify the SHA-256 checksum, and open the extracted `Study-Flow-Example` vault, or copy the plugin ZIP’s `study-flow` folder into an existing vault’s `.obsidian/plugins/`. Study Flow is not listed in Community Plugins. Enable Study Flow, install **PDF++** and **Spaced Repetition** from Community Plugins, then save the workbench defaults. No Node, JSON editing, QuickAdd or API key is needed for native use.
 
 ![Native setup](docs/images/v0.2/01-setup.png)
 
@@ -26,7 +26,7 @@ Developers need Node 20+: `npm ci`, `npm run check`, `npm test`, `npm run packag
 
 **Screenshots, copied text and PDF selections → your understanding → Markdown flashcards → spaced review.**
 
-[中文](README.md) · [Download legacy starter vault](https://github.com/crown-sports/obsidian-study-flow/releases/latest)
+[中文](README.md) · [Download legacy starter vault](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.1.0)
 
 ![Workflow diagram](docs/images/workflow.svg)
 

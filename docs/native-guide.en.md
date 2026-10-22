@@ -4,7 +4,7 @@
 
 ## Install without Node or QuickAdd
 
-v0.2 is a desktop plugin preview, delivered through a feature PR. It has no formal release or community listing yet. Get its packages from the PR’s passing [Actions build artifacts](https://github.com/crown-sports/obsidian-study-flow/actions). Sign in to GitHub, open the matching run and download a platform artifact. It contains three ZIPs and `SHA256SUMS`.
+Download v0.2.0 from [GitHub Releases](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.0). It is not listed in the Obsidian community directory. Choose a ZIP below and download `SHA256SUMS`. Compare `shasum -a 256 filename.zip` on macOS/Linux or `Get-FileHash filename.zip -Algorithm SHA256` in Windows PowerShell with its checksum entry.
 
 | Package | Purpose |
 | --- | --- |
@@ -86,3 +86,7 @@ Real application validation: macOS, Obsidian 1.13.7, PDF++ 0.40.31 and SR 1.15.4
 Default SR syntax, forward multiline cards, custom multiline question/answer separators and folder decks are covered. Custom inline separators, end markers, custom cloze patterns, fenced code blocks and non-NOTES scheduling storage are not supported for publication yet. The UI explains the limitation and keeps drafting available without changing SR settings.
 
 Developers need Node 20+: `npm ci`, `npm run check`, `npm test`, `npm run package`. Packages go into `dist/`; installed plugins require no `node_modules`. See [architecture and API](architecture.md).
+
+## Upgrade from a preview
+
+Close Obsidian and back up the vault. Replace `main.js`, `manifest.json`, `styles.css` and `LICENSE` in `.obsidian/plugins/study-flow/` with the new plugin ZIP, keeping your existing `data.json`. Reopen Obsidian and rebuild the learning index. v0.2.0 writes schema 2 / text encoding 2; schema 1 notes remain readable and upgrade on save. Older previews reject schema 2, so do not downgrade to edit newly saved records. Existing SR schedules are preserved.
