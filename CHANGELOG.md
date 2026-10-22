@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Preserve literal backslashes, escaped separators and literal `<br>` lines across repeated card/excerpt edits. New saves record their text encoding; existing notes retain the legacy decoder until saved.
+- Preserve literal backslashes, escaped separators and literal `<br>` lines across repeated card/excerpt edits. New saves use schema 2 and an explicit text encoding; schema 1 notes retain the legacy decoder until saved. Older previews reject the new schema instead of silently rewriting it.
 - Reject reserved control comments in encoded text before overwriting a learning record, and reject unknown text encodings.
 
 ## 0.2.0 preview - 2026-10-05

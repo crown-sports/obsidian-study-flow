@@ -50,9 +50,9 @@ SR owns scheduling and its review interface. PDF++ supplies live selection coord
 
 ## 数据约定 / Markdown schema
 
-所有对象使用 `study_flow_schema: 1`、`study_flow_kind`、`study_flow_id`。插件版本是 0.2.0，文件 schema 版本独立管理。ID 是 UUID；升级的旧对象使用基于来源的稳定摘要 ID。文件名含可读标题或日期与短 ID，编辑问题不会改名。
+新保存的对象使用 `study_flow_schema: 2`、`study_flow_kind`、`study_flow_id`，同时兼容读取 schema 1。插件版本是 0.2.0，文件 schema 版本独立管理。ID 是 UUID；升级的旧对象使用基于来源的稳定摘要 ID。文件名含可读标题或日期与短 ID，编辑问题不会改名。
 
-新保存的记录含 `study_flow_text_encoding: 2`，在编码 SR 分隔符之前转义反斜杠，并区分空行和字面量 `<br>`。没有该属性的旧记录仍使用旧解码方式；保存时升级编码，保留卡片 ID 和复习计划。未知编码拒绝编辑。更新后请使用支持编码 2 的插件编辑这些记录，旧预览版不理解新编码；已被旧版覆盖丢失的字符无法自动恢复。Study Flow / SR 的 HTML 控制注释是保留语法，不能放进摘录或已发布问答的正文。
+schema 2 记录必须含 `study_flow_text_encoding: 2`，在编码 SR 分隔符之前转义反斜杠，并区分空行和字面量 `<br>`。schema 1 记录仍使用旧解码方式；保存时升级文件 schema 与编码，保留卡片 ID 和复习计划。未知编码拒绝编辑。旧预览版因不支持文件 schema 2 而明确拒绝编辑新记录；已被旧版覆盖丢失的字符无法自动恢复。Study Flow / SR 的 HTML 控制注释是保留语法，不能放进摘录或已发布问答的正文。
 
 | 对象 | 内容 | 默认位置 |
 | --- | --- | --- |

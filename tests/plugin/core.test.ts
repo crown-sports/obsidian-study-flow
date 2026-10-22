@@ -147,7 +147,9 @@ test("unversioned cards use the legacy decoder; unknown encodings and control co
   };
   await service.saveCard(card);
   await vault.process(card.path, (text) =>
-    text.replace("study_flow_text_encoding: 2\n", ""),
+    text
+      .replace("study_flow_text_encoding: 2\n", "")
+      .replace("study_flow_schema: 2", "study_flow_schema: 1"),
   );
   assert.equal(((await service.read(card.id)) as Card).answer, card.answer);
   const before = await vault.read(card.path);
@@ -161,6 +163,38 @@ test("unversioned cards use the legacy decoder; unknown encodings and control co
     () => parseRecord(card.path, unknown, yaml),
     /Unsupported Study Flow text encoding/,
   );
+  assert.throws(
+    () =>
+      parseRecord(
+        card.path,
+        before.replace("study_flow_schema: 1", "study_flow_schema: 2"),
+        yaml,
+      ),
+    /Unsupported Study Flow text encoding/,
+  );
+  const upgraded = serialize(card, yaml, before);
+  assert.equal(frontmatter(upgraded, yaml).data.study_flow_schema, 2);
+  assert.equal(frontmatter(upgraded, yaml).data.study_flow_text_encoding, 2);
+});
+test("versioned managed fields preserve literal breaks, whitespace and terminal newlines", () => {
+  const { service } = environment();
+  for (const value of [
+    "  <br>  ",
+    "answer\n",
+    "  code\nend  ",
+    "answer\n\n",
+    "\\<br>",
+  ]) {
+    const card = {
+      ...service.newCard(),
+      status: "active" as const,
+      question: value,
+      answer: value,
+    };
+    const parsed = parseRecord(card.path, serialize(card, yaml), yaml) as Card;
+    assert.equal(parsed.question, value);
+    assert.equal(parsed.answer, value);
+  }
 });
 test("concurrent capture creates one book and one excerpt; changed source keeps a new snapshot", async () => {
   const { service } = environment();
@@ -634,14 +668,14 @@ test("unsupported schemas and duplicate IDs report original paths; malformed edi
   vault.files.delete(copy);
   service.index.remove(copy);
   await vault.process(saved.path, (text) =>
-    text.replace("study_flow_schema: 1", "study_flow_schema: 99"),
+    text.replace("study_flow_schema: 2", "study_flow_schema: 99"),
   );
   await service.index.refresh(saved.path);
   assert.equal(service.index.records.has(saved.path), false);
   assert.equal(service.index.issues.has(saved.path), true);
   assert.equal(
     await vault.read(saved.path),
-    original.replace("study_flow_schema: 1", "study_flow_schema: 99"),
+    original.replace("study_flow_schema: 2", "study_flow_schema: 99"),
   );
   vault.files.set(saved.path, original);
   await service.index.refresh(saved.path);

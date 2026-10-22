@@ -41,6 +41,7 @@ function fieldBlock(name: string, value: string): string {
 function activeFields(
   body: string,
   separator: string,
+  encoding = 1,
 ): { question: string; answer: string } {
   const start = body.indexOf(START),
     end = body.indexOf(END);
@@ -64,17 +65,14 @@ function activeFields(
       (line, i) => i > at && /^(?:来源|Source)[:：]|<!--SR:/.test(line),
     );
   if (aEnd < 0) aEnd = lines.length;
-  return {
-    question: lines
-      .slice(qStart + 1, at)
-      .join("\n")
-      .trim(),
-    answer: lines
-      .slice(at + 1, aEnd)
-      .join("\n")
-      .trim()
-      .replace(/\n<br>$/, ""),
-  };
+  const question = lines.slice(qStart + 1, at).join("\n");
+  const answer = lines.slice(at + 1, aEnd).join("\n");
+  return encoding === 2
+    ? { question, answer }
+    : {
+        question: question.trim(),
+        answer: answer.trim().replace(/\n<br>$/, ""),
+      };
 }
 export function scheduleFrom(text: string): string {
   return (text.match(/<!--SR:[\s\S]*?-->/g) ?? []).join("\n");
@@ -102,14 +100,18 @@ export function parseRecord(
   const kind = f.study_flow_kind,
     id = str(f.study_flow_id);
   if (!kind && !f.study_flow_id && !f.study_flow_schema) return null;
-  if (!id || f.study_flow_schema !== 1)
+  if (!id || (f.study_flow_schema !== 1 && f.study_flow_schema !== 2))
     throw new FlowError(
       "unsupported",
       "Unsupported or incomplete Study Flow schema. Keep the original file and repair its properties or use a compatible plugin version.",
     );
   const base = { id, path, revision: "" };
   const encoding = f.study_flow_text_encoding ?? 1;
-  if (encoding !== 1 && encoding !== 2)
+  if (
+    (encoding !== 1 && encoding !== 2) ||
+    (f.study_flow_schema === 2 && encoding !== 2) ||
+    (f.study_flow_schema === 1 && encoding !== 1)
+  )
     throw new FlowError("unsupported", "Unsupported Study Flow text encoding.");
   let record: Record;
   if (kind === "book") {
@@ -173,7 +175,7 @@ export function parseRecord(
       status === "active"
         ? legacyFields?.question !== null && legacyFields?.answer !== null
           ? legacyFields
-          : activeFields(body, str(f.study_flow_separator, "?"))
+          : activeFields(body, str(f.study_flow_separator, "?"), encoding)
         : null;
     const question =
       status === "draft"
@@ -253,7 +255,7 @@ export function cardText(text: string, separator = "?"): string {
     .split("\n")
     .map((line) => {
       if (!line.trim()) return "<br>";
-      if (line === "<br>") return "\\<br>";
+      if (line.trim() === "<br>") return line.replace("<br>", "\\<br>");
       if (line.trim() === separator || line.trim() === separator + separator)
         return `\\${escapedCardLine(line)}`;
       return escapedCardLine(line);
@@ -273,8 +275,8 @@ export function decodeCardText(
     .map((line) =>
       line === "<br>"
         ? ""
-        : encoding === 2 && line === "\\<br>"
-          ? "<br>"
+        : encoding === 2 && line.trim() === "\\<br>"
+          ? line.replace("\\<br>", "<br>")
           : (line.startsWith("\\") && separators.includes(line.slice(1).trim())
               ? line.slice(1)
               : line
@@ -289,7 +291,7 @@ export function serialize(
 ): string {
   const { data: f, body } = frontmatter(previous, yaml);
   Object.assign(f, {
-    study_flow_schema: 1,
+    study_flow_schema: 2,
     study_flow_kind: record.kind,
     study_flow_id: record.id,
     study_flow_text_encoding: 2,
