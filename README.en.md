@@ -1,98 +1,81 @@
 # Obsidian Study Flow · by crown
 
-**Read a PDF → capture a passage → write your understanding → make a card → review → return to the source.**
+Turn passages from your PDFs into cards you come back to review.
 
-[中文](README.md) · [User guide](docs/native-guide.en.md) · [Download](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.1) · [Value and evidence](docs/product.md)
+[中文](README.md) · [Download v0.2.1](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.1) · [User guide](docs/native-guide.en.md)
 
-For people who read textbooks, papers or work material in Obsidian and accumulate
-highlights they rarely revisit. Capture while reading, reflect later, and publish
-only the questions worth reviewing. Your excerpts and cards remain editable
-Markdown with links to the original passage. The desktop workbench supports
-English and Chinese.
+Capture a passage while reading. Explain it in your own words later, then make a
+question worth revisiting. Excerpts and cards stay in local Markdown, with a link
+back to the PDF when you need the context. The workbench supports English and Chinese.
 
-## Choose your download
+![Real Obsidian window with a PDF selection and the capture button](docs/images/v0.2/02-capture.png)
 
-Get the chosen ZIP and `SHA256SUMS` from the [v0.2.1 release](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.1).
-The [guide](docs/native-guide.en.md) explains checksum verification.
+*Select a passage and capture it. You can keep reading and leave the reflection for later.*
 
-| Your situation | Download |
+## Write your understanding, then a question
+
+Find the passage in **Inbox** and add your reflection. One excerpt can lead to
+several cards. Keep an unfinished question as a draft; preview it before publishing.
+
+![Card editor over the excerpt inbox, with a question, answer, deck, preview and draft/publish buttons](docs/images/v0.2/03-inbox-card.png)
+
+*The screenshots use the included original practice material. Drafts stay out of review.*
+
+## Recall first, reveal and rate
+
+**Review** opens Spaced Repetition's native reviewer. Answer, flip, and rate the
+card. Its back links to both the PDF passage and your reflection. Editing a card
+you have already reviewed preserves its existing schedule.
+
+![Native Spaced Repetition review with answer, source links and rating buttons](docs/images/v0.2/04-sr-review.png)
+
+*Existing macOS screenshots of the v0.2 interface, which v0.2.1 retains. That patch updates onboarding and the example vault. [Image sources](docs/images/README.md).*
+
+## Try one loop in the example vault
+
+Choose a ZIP from the [v0.2.1 release](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.1):
+
+| What you want | Download |
 | --- | --- |
-| Try it without changing your own vault | **`obsidian-study-flow-example-v0.2.1.zip`**: separate practice vault, plugin and original PDF |
-| Install in an existing vault | **`obsidian-study-flow-plugin-v0.2.1.zip`**: put its `study-flow` folder in your vault's `.obsidian/plugins/` |
-| Keep the old QuickAdd workflow | `obsidian-study-flow-starter-v0.2.1.zip`: legacy example; new users should choose one of the above |
+| Try it without changing your vault | **`obsidian-study-flow-example-v0.2.1.zip`**, with the plugin and practice PDF |
+| Add it to an existing vault | **`obsidian-study-flow-plugin-v0.2.1.zip`**; put `study-flow` in your vault's `.obsidian/plugins/` |
+| Keep using the old QuickAdd macros | `obsidian-study-flow-starter-v0.2.1.zip`, the legacy example |
 
-GitHub's automatic “Source code” archives are developer source, not installable
-plugin packages. Study Flow is not listed in Community Plugins yet. Install
-**PDF++** and **Spaced Repetition** separately from Community Plugins; their
-binaries are not bundled. Native use needs no Node, QuickAdd, JSON editing or API key.
-
-## Complete your first learning loop
-
-1. Unzip the example and open `Study-Flow-Example` as a new Obsidian vault. Enable **Study Flow** in Community Plugins.
-2. Install and enable **PDF++** and **Spaced Repetition**. Open the 🎓 workbench and save its defaults; dependency status and installation links are shown there.
+1. Unzip the example. Open `Study-Flow-Example` as a new Obsidian vault and enable **Study Flow**.
+2. Install and enable **PDF++** and **Spaced Repetition** from Community Plugins. Open the 🎓 workbench and save the defaults.
 3. Open `03_PDF/主动回忆示例.pdf`, select the first two lines on page 1, and run **Study Flow: Capture PDF selection**.
-4. In **Inbox**, write your reflection, such as “Recognition is not recall.” Create a question: “Why is rereading different from remembering?” Answer in your own words, save a draft, preview and publish.
-5. In **Review**, start native SR review. Recall first, reveal the answer and rate it. Follow the source link on the back to return to the PDF.
+4. In **Inbox**, write a reflection such as “Recognition is not recall.” Create a card asking “Why is rereading different from remembering?” Answer in your own words, preview and publish.
+5. Open **Review**, answer and rate the card, then follow its source link back to the PDF. The vault's `00_开始.md` also walks through these steps.
 
-**Your first result:** an excerpt with the original passage and your reflection,
-a published review card, and a working source link. Drafts stay out of review.
-If a card is absent, check publication, SR enablement and the selected deck.
-The example's `00_开始.md` repeats these steps inside Obsidian.
+Missing a card? Publish the draft, then check that SR is enabled and the selected
+deck includes it. GitHub's “Source code” archives are not plugin installers.
+Study Flow is not in Community Plugins yet; install PDF++ and SR separately.
+Normal use needs no Node, QuickAdd or API key. [Installation, checksums and help](docs/native-guide.en.md).
 
-![Capture while reading](docs/images/v0.2/02-capture.png)
+## Keep your existing notes and cards
 
-![Inbox and card preview](docs/images/v0.2/03-inbox-card.png)
+**0.2.0 → 0.2.1:** back up the vault, close Obsidian, replace the plugin files and
+keep `data.json`. The record format is unchanged; no legacy-data migration is
+needed for this patch. Reopen and rebuild the learning index.
 
-## Keep reading and organizing separate
+**Legacy QuickAdd records:** preview the upgrade in the workbench before confirming
+backup and upgrade. Original text and review schedules are retained; restoration
+checks for newer edits. Try a vault copy first. [Upgrade and recovery](docs/native-guide.en.md).
 
-| Situation | Behavior |
-| --- | --- |
-| A passage matters now, but you need to keep reading | Save the selection immediately; a repeated identical capture returns the existing excerpt |
-| A question is not ready | Save a draft without sending it into review |
-| You edit a reviewed card | Keep its file, identity and existing SM-2 / FSRS scheduling comments |
-| The source moved or is missing | Repair links or relink the PDF; the captured text remains available |
-| You return to a document | Restore saved progress for PDFs you have started; mark completion yourself |
+## A few limits
 
-Study Flow connects capture, reflection, publishing and recovery. PDF++ provides
-PDF selection/navigation; Spaced Repetition provides native review and scheduling.
-The [implementation evidence](docs/product.md) covers text preservation, scheduling,
-duplicate capture and migration conflicts. It supports those behaviors, not a
-claim of improved learning outcomes or a new repetition algorithm.
+Study Flow handles capture, reflection, cards and local files. PDF++ supplies
+selection/navigation; Spaced Repetition supplies review scheduling. Scanned PDFs
+need a text layer. OCR, generated cards and image occlusion are not included.
+On mobile, sync your notes and attachments to review them with SR.
 
-## Continue with existing notes and cards
-
-**0.2.0 → 0.2.1:** this updates onboarding and the example vault. The record format
-is unchanged; do not rerun legacy-data migration just for this patch.
-
-**Existing 0.2.0 or v0.2 preview plugin:** back up the vault, close Obsidian, replace the
-plugin files with the new package and preserve `data.json`. Reopen and rebuild the
-learning index. Do not use an older preview to edit records saved by the new version.
-
-**Legacy QuickAdd data:** open the workbench's legacy-upgrade preview. Nothing is
-written until you confirm backup and upgrade. Original content and review schedules
-are retained; restoration stops if newer edits would be overwritten. Try your vault
-copy first. [Upgrade and recovery steps](docs/native-guide.en.md).
-
-QuickAdd remains optional for existing macros. The separate
-[legacy guide](docs/install.md) documents that route; new users can follow the
-native workflow above.
-
-## Scope and evidence
-
-Processing stays local. Scanned PDFs need a text layer. OCR, AI-generated cards
-and image occlusion are not implemented. Mobile users can review synced Markdown
-and attachments with SR; native mobile capture is not supported.
-
-The [existing application validation](docs/validation-v0.2.md) covers macOS,
-Obsidian 1.13.7, PDF++ 0.40.31 and SR 1.15.4. Windows/Linux build and file tests run
-in CI; their application UI is unverified. This documentation update adds no new
-in-app or user-study validation. [Supported formats and versions](docs/compatibility.md).
+Desktop operation has been checked on macOS with Obsidian 1.13.7, PDF++ 0.40.31 and
+SR 1.15.4. Windows/Linux application operation is still unverified.
+[Compatibility](docs/compatibility.md).
 
 ## Development
 
-Node 20+: `npm ci`, `npm run check`, `npm test`, `npm run package`.
-`dist/` contains the plugin, native example, separate legacy starter and checksums.
+Node 20+: `npm ci` → `npm run check` → `npm test` → `npm run package`.
+`dist/` contains three installation ZIPs and `SHA256SUMS`.
 
-[Architecture](docs/architecture.md) · [Contributing](CONTRIBUTING.md) · [MIT](LICENSE) · [Upstream acknowledgements](NOTICE)
-
-Examples and screenshots use original practice material, not personal vault contents or paid textbooks.
+[Architecture and API](docs/architecture.md) · [Implementation notes](docs/product.md) · [Contributing](CONTRIBUTING.md) · [Legacy guide](docs/guide.md) · [MIT](LICENSE) · [Acknowledgements](NOTICE)
