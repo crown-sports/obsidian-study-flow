@@ -4,13 +4,13 @@
 
 ## Install without Node or QuickAdd
 
-Download v0.2.0 from [GitHub Releases](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.0). It is not listed in the Obsidian community directory. Choose a ZIP below and download `SHA256SUMS`. Compare `shasum -a 256 filename.zip` on macOS/Linux or `Get-FileHash filename.zip -Algorithm SHA256` in Windows PowerShell with its checksum entry.
+Download v0.2.1 from [GitHub Releases](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.1). It is not listed in the Obsidian community directory. Choose a ZIP below and download `SHA256SUMS`. Compare `shasum -a 256 filename.zip` on macOS/Linux or `Get-FileHash filename.zip -Algorithm SHA256` in Windows PowerShell with its checksum entry.
 
 | Package | Purpose |
 | --- | --- |
-| `obsidian-study-flow-plugin-v0.2.0.zip` | Native plugin for an existing vault |
-| `obsidian-study-flow-example-v0.2.0.zip` | Separate practice vault with our plugin and original PDF |
-| `obsidian-study-flow-starter-v0.2.0.zip` | Legacy QuickAdd macros and examples, without the native plugin |
+| `obsidian-study-flow-plugin-v0.2.1.zip` | Native plugin for an existing vault |
+| `obsidian-study-flow-example-v0.2.1.zip` | Separate practice vault with our plugin and original PDF |
+| `obsidian-study-flow-starter-v0.2.1.zip` | Legacy QuickAdd macros and examples, without the native plugin |
 
 For an existing vault, copy the extracted `study-flow` folder into `.obsidian/plugins/`, restart Obsidian and enable **Study Flow** in Community Plugins. For the example, open the extracted `Study-Flow-Example` folder as a new vault, then enable Study Flow.
 
@@ -87,6 +87,10 @@ Default SR syntax, forward multiline cards, custom multiline question/answer sep
 
 Developers need Node 20+: `npm ci`, `npm run check`, `npm test`, `npm run package`. Packages go into `dist/`; installed plugins require no `node_modules`. See [architecture and API](architecture.md).
 
-## Upgrade from a preview
+## Upgrade from 0.2.0 or a preview
+
+0.2.1 updates installation guidance and the example vault onboarding. Learning
+record formats and scheduling are unchanged. Existing 0.2.0 users can replace
+the plugin files without rerunning legacy-data migration.
 
 Close Obsidian and back up the vault. Replace `main.js`, `manifest.json`, `styles.css` and `LICENSE` in `.obsidian/plugins/study-flow/` with the new plugin ZIP, keeping your existing `data.json`. Reopen Obsidian and rebuild the learning index. v0.2.0 writes schema 2 / text encoding 2; schema 1 notes remain readable and upgrade on save. Older previews reject schema 2, so do not downgrade to edit newly saved records. Existing SR schedules are preserved.
