@@ -2,7 +2,7 @@
 
 **Read a PDF → capture a passage → write your understanding → make a card → review → return to the source.**
 
-[中文](README.md) · [User guide](docs/native-guide.en.md) · [Download](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.0) · [Value and evidence](docs/product.md)
+[中文](README.md) · [User guide](docs/native-guide.en.md) · [Download](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.1) · [Value and evidence](docs/product.md)
 
 For people who read textbooks, papers or work material in Obsidian and accumulate
 highlights they rarely revisit. Capture while reading, reflect later, and publish
@@ -12,14 +12,14 @@ English and Chinese.
 
 ## Choose your download
 
-Get the chosen ZIP and `SHA256SUMS` from the [v0.2.0 release](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.0).
+Get the chosen ZIP and `SHA256SUMS` from the [v0.2.1 release](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.1).
 The [guide](docs/native-guide.en.md) explains checksum verification.
 
 | Your situation | Download |
 | --- | --- |
-| Try it without changing your own vault | **`obsidian-study-flow-example-v0.2.0.zip`**: separate practice vault, plugin and original PDF |
-| Install in an existing vault | **`obsidian-study-flow-plugin-v0.2.0.zip`**: put its `study-flow` folder in your vault's `.obsidian/plugins/` |
-| Keep the old QuickAdd workflow | `obsidian-study-flow-starter-v0.2.0.zip`: legacy example; new users should choose one of the above |
+| Try it without changing your own vault | **`obsidian-study-flow-example-v0.2.1.zip`**: separate practice vault, plugin and original PDF |
+| Install in an existing vault | **`obsidian-study-flow-plugin-v0.2.1.zip`**: put its `study-flow` folder in your vault's `.obsidian/plugins/` |
+| Keep the old QuickAdd workflow | `obsidian-study-flow-starter-v0.2.1.zip`: legacy example; new users should choose one of the above |
 
 GitHub's automatic “Source code” archives are developer source, not installable
 plugin packages. Study Flow is not listed in Community Plugins yet. Install
@@ -61,7 +61,10 @@ claim of improved learning outcomes or a new repetition algorithm.
 
 ## Continue with existing notes and cards
 
-**Existing v0.2 preview plugin:** back up the vault, close Obsidian, replace the
+**0.2.0 → 0.2.1:** this updates onboarding and the example vault. The record format
+is unchanged; do not rerun legacy-data migration just for this patch.
+
+**Existing 0.2.0 or v0.2 preview plugin:** back up the vault, close Obsidian, replace the
 plugin files with the new package and preserve `data.json`. Reopen and rebuild the
 learning index. Do not use an older preview to edit records saved by the new version.
 

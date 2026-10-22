@@ -1,6 +1,6 @@
 {
   "name": "obsidian-study-flow",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "A local-first PDF learning workbench for Obsidian: capture, understand, create flashcards and review.",
   "license": "MIT",

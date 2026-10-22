@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1 - 2026-10-23
+
+- Clarify plugin/example/legacy downloads and the first PDF → reflection → card → review loop in English and Chinese.
+- Include the first-result checklist and troubleshooting cues in the example vault’s `00_开始.md`.
+- Document implementation evidence, product limits and existing-record upgrade steps. Core learning behavior, record formats and scheduling are unchanged; existing 0.2.0 users do not need to rerun legacy migration.
+
 ## 0.2.0 - 2026-10-22
 
 - Preserve literal backslashes, escaped separators and literal `<br>` lines across repeated card/excerpt edits. New saves use schema 2 and an explicit text encoding; schema 1 notes retain the legacy decoder until saved. Older previews reject the new schema instead of silently rewriting it.

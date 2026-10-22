@@ -2,7 +2,7 @@
 
 **阅读 PDF → 一键摘录 → 写下理解 → 制卡 → 间隔复习 → 返回原文。**
 
-[English](README.en.md) · [原生插件上手](docs/native-guide.md) · [下载安装包](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.0) · [价值与实现证据](docs/product.md)
+[English](README.en.md) · [原生插件上手](docs/native-guide.md) · [下载安装包](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.1) · [价值与实现证据](docs/product.md)
 
 适合在 Obsidian 读教材、论文或工作资料，划了很多重点却没有回头复习的人。
 阅读时先保存原文，整理时写自己的理解，再把值得记住的问题发布到复习。你会留下可编辑的摘录和卡片，并能从答案返回 PDF 来源；界面支持中文和英文。
@@ -18,19 +18,19 @@ flowchart LR
 
 ## 先选对安装包
 
-从 [v0.2.0 发布页](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.0)下载对应 ZIP 和 `SHA256SUMS`；[教程](docs/native-guide.md)说明如何核对。
+从 [v0.2.1 发布页](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.1)下载对应 ZIP 和 `SHA256SUMS`；[教程](docs/native-guide.md)说明如何核对。
 
 | 你的情况 | 选择 |
 | --- | --- |
-| 第一次试用，先不动自己的笔记库 | **`obsidian-study-flow-example-v0.2.0.zip`**：新练习库，含插件和原创 PDF |
-| 想装进已有笔记库 | **`obsidian-study-flow-plugin-v0.2.0.zip`**：把 `study-flow` 文件夹放进库内 `.obsidian/plugins/` |
-| 继续使用旧 QuickAdd 宏 | `obsidian-study-flow-starter-v0.2.0.zip`：旧流程示例；新用户用上面两项 |
+| 第一次试用，先不动自己的笔记库 | **`obsidian-study-flow-example-v0.2.1.zip`**：新练习库，含插件和原创 PDF |
+| 想装进已有笔记库 | **`obsidian-study-flow-plugin-v0.2.1.zip`**：把 `study-flow` 文件夹放进库内 `.obsidian/plugins/` |
+| 继续使用旧 QuickAdd 宏 | `obsidian-study-flow-starter-v0.2.1.zip`：旧流程示例；新用户用上面两项 |
 
 GitHub 自动提供的 “Source code” 是开发源码，不是可直接启用的插件包。当前尚未上架社区市场；PDF++ 和 Spaced Repetition 需要另外从社区安装。
 
 ## 用示例完成第一轮学习
 
-1. 从 [v0.2.0 发布页](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.0) 下载 `obsidian-study-flow-example-v0.2.0.zip` 和 `SHA256SUMS`，核对 SHA-256 后解压。
+1. 从 [v0.2.1 发布页](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.1) 下载 `obsidian-study-flow-example-v0.2.1.zip` 和 `SHA256SUMS`，核对 SHA-256 后解压。
 2. 将 `Study-Flow-Example` 作为 Obsidian 新库打开，启用 **Study Flow**。
 3. 从社区市场安装并启用 **PDF++**、**Spaced Repetition**。工作台显示依赖状态，并提供安装入口。
 4. 点击 🎓，保存默认配置。打开 `03_PDF/主动回忆示例.pdf`，选中第一页前两行，运行 **Study Flow: 保存 PDF 选区**。
@@ -64,7 +64,9 @@ GitHub 自动提供的 “Source code” 是开发源码，不是可直接启用
 
 ## 已有记录如何继续用
 
-已有 v0.2 预览插件：先备份库，关闭 Obsidian，用新版插件文件替换旧文件，保留 `data.json`；重新打开后重建学习索引。新版保存过的记录不要交给旧预览插件继续编辑。
+**从 0.2.0 升到 0.2.1：**这是上手文档与示例包补丁，记录格式不变，不需要重新执行旧数据升级。
+
+已有 0.2.0 或 v0.2 预览插件：先备份库，关闭 Obsidian，用新版插件文件替换旧文件，保留 `data.json`；重新打开后重建学习索引。新版保存过的记录不要交给旧预览插件继续编辑。
 
 旧 QuickAdd 学习笔记与卡片：从工作台“升级旧数据”先预览，确认“备份并升级”后才写入。原文件和复习调度保留；恢复前会检查之后的新编辑。具体步骤见[原生指南](docs/native-guide.md)。先在副本中确认自己的卡片和来源，再继续使用。
 

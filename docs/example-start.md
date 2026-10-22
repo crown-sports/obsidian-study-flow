@@ -1,4 +1,4 @@
-# Study Flow by crown · v0.2
+# Study Flow by crown · v0.2.1
 
 先保存原文，稍后理解，再把值得记住的内容做成卡片。
 Capture first, understand later, then make cards for what matters.

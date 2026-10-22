@@ -4,13 +4,13 @@
 
 ## 安装：不需要 Node 或 QuickAdd
 
-v0.2.0 从 [GitHub 发布页](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.0) 下载，尚未上架 Obsidian 社区市场。选择下面一种 ZIP，并下载 `SHA256SUMS` 核对文件。macOS/Linux 可运行 `shasum -a 256 文件名.zip`，Windows PowerShell 可运行 `Get-FileHash 文件名.zip -Algorithm SHA256`，将结果与清单内同名文件对照。
+v0.2.1 从 [GitHub 发布页](https://github.com/crown-sports/obsidian-study-flow/releases/tag/v0.2.1) 下载，尚未上架 Obsidian 社区市场。选择下面一种 ZIP，并下载 `SHA256SUMS` 核对文件。macOS/Linux 可运行 `shasum -a 256 文件名.zip`，Windows PowerShell 可运行 `Get-FileHash 文件名.zip -Algorithm SHA256`，将结果与清单内同名文件对照。
 
 | 包 | 用途 |
 | --- | --- |
-| `obsidian-study-flow-plugin-v0.2.0.zip` | 在已有库中安装本项目原生插件 |
-| `obsidian-study-flow-example-v0.2.0.zip` | 包含本插件和原创 PDF 的独立练习库 |
-| `obsidian-study-flow-starter-v0.2.0.zip` | 保留旧 QuickAdd 宏的示例库，不包含原生插件 |
+| `obsidian-study-flow-plugin-v0.2.1.zip` | 在已有库中安装本项目原生插件 |
+| `obsidian-study-flow-example-v0.2.1.zip` | 包含本插件和原创 PDF 的独立练习库 |
+| `obsidian-study-flow-starter-v0.2.1.zip` | 保留旧 QuickAdd 宏的示例库，不包含原生插件 |
 
 已有库：解压插件 ZIP，将整个 `study-flow` 文件夹放到库内 `.obsidian/plugins/`，重启 Obsidian，再在设置 → 第三方插件中启用 **Study Flow**。示例库：直接将解压的 `Study-Flow-Example` 文件夹作为新库打开，再启用 Study Flow。建议先在示例库练习。
 
@@ -87,6 +87,8 @@ SR 默认语法、普通正向多行卡、自定义多行问答分隔符和文�
 
 开发者从源码构建：Node 20+，运行 `npm ci`、`npm run check`、`npm test`、`npm run package`。产物在 `dist/`，安装无需携带 `node_modules`。架构和对外接口见 [architecture.md](architecture.md)。
 
-## 从预览版本升级
+## 从 0.2.0 或预览版本升级
+
+0.2.1 更新安装说明和示例库上手文字，不改变学习记录格式或调度。已使用 0.2.0 的用户替换插件文件即可，不需要重复执行旧数据升级。
 
 关闭 Obsidian，备份笔记库，将新版插件 ZIP 中的 `main.js`、`manifest.json`、`styles.css`、`LICENSE` 替换到 `.obsidian/plugins/study-flow/`，保留现有 `data.json`。重新打开后运行“重建学习索引”。v0.2.0 保存的记录使用 schema 2 / text encoding 2；旧 schema 1 记录可读，保存时升级。旧预览插件会拒绝 schema 2，请勿降级后继续编辑新版记录。已有 SR 调度保持。
