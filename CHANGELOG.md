@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Preserve literal backslashes, escaped separators and literal `<br>` lines across repeated card/excerpt edits. New saves record their text encoding; existing notes retain the legacy decoder until saved.
+- Reject reserved control comments in encoded text before overwriting a learning record, and reject unknown text encodings.
+
 ## 0.2.0 preview - 2026-10-05
 
 - 原生桌面插件、crown 品牌、中英文工作台、设置与依赖安装入口。
