@@ -39,7 +39,7 @@ Choose a ZIP from the [v0.2.1 release](https://github.com/crown-sports/obsidian-
 | --- | --- |
 | Try it without changing your vault | **`obsidian-study-flow-example-v0.2.1.zip`**, with the plugin and practice PDF |
 | Add it to an existing vault | **`obsidian-study-flow-plugin-v0.2.1.zip`**; put `study-flow` in your vault's `.obsidian/plugins/` |
-| Keep using the old QuickAdd macros | `obsidian-study-flow-starter-v0.2.1.zip`, the legacy example |
+| Keep using the old QuickAdd macros | `obsidian-study-flow-starter-v0.2.1.zip`, the [legacy example and English quickstart](docs/guide.en.md) |
 
 1. Unzip the example. Open `Study-Flow-Example` as a new Obsidian vault and enable **Study Flow**.
 2. Install and enable **PDF++** and **Spaced Repetition** from Community Plugins. Open the 🎓 workbench and save the defaults.
@@ -78,4 +78,4 @@ SR 1.15.4. Windows/Linux application operation is still unverified.
 Node 20+: `npm ci` → `npm run check` → `npm test` → `npm run package`.
 `dist/` contains three installation ZIPs and `SHA256SUMS`.
 
-[Architecture and API](docs/architecture.md) · [Implementation notes](docs/product.md) · [Contributing](CONTRIBUTING.md) · [Legacy guide](docs/guide.md) · [MIT](LICENSE) · [Acknowledgements](NOTICE)
+[Architecture and API](docs/architecture.md) · [Implementation notes](docs/product.md) · [Contributing](CONTRIBUTING.md) · [Legacy QuickAdd guide](docs/guide.en.md) · [MIT](LICENSE) · [Acknowledgements](NOTICE)

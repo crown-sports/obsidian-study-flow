@@ -15,6 +15,6 @@ npm run package
 
 Three install archives and SHA-256 checksums are built into `dist/`. Keep package allowlists strict: only our plugin code, original example content and required documentation. No third-party plugin binaries, personal notes, credentials or workspace state.
 
-英文旧流程教程已有独立贡献 PR；原生功能说明写在 `docs/native-guide.en.md`，避免覆盖贡献者正在修改的旧教程。
+英文旧流程教程由社区贡献者 Harshit Nagila 提供，位于 `docs/guide.en.md`；原生功能说明写在 `docs/native-guide.en.md`。修改教程时请区分旧 QuickAdd 宏和原生插件入口。
 
 PR 请写明触发场景、修改后行为和验证结果。评分算法的问题交给 Spaced Repetition 上游；PDF 阅读器本身的问题交给 PDF++ 上游，并附最小复现。

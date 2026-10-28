@@ -1,6 +1,10 @@
 Obsidian Study Flow publishes its native plugin, QuickAdd scripts, configuration, documentation,
 original demo PDF and diagrams under MIT. It grew from a personal learning workflow.
 
+The English screenshot and clipboard quickstart was contributed by Harshit Nagila:
+https://github.com/crown-sports/obsidian-study-flow/pull/4
+The contributor's original commit is retained in the repository history.
+
 It depends on independently maintained third-party projects:
 - QuickAdd by Christian Houmann: https://github.com/chhoumann/quickadd
 - PDF++ by Ryota Ushio: https://github.com/RyotaUshio/obsidian-pdf-plus

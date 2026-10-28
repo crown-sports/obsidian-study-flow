@@ -1,6 +1,6 @@
 # Study Flow v0.2 native plugin guide
 
-[中文](native-guide.md) · [Home](../README.en.md) · [Legacy QuickAdd guide](guide.md)
+[中文](native-guide.md) · [Home](../README.en.md) · [Legacy QuickAdd guide](guide.en.md)
 
 ## Install without Node or QuickAdd
 

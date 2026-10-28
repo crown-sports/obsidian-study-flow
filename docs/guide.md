@@ -1,5 +1,7 @@
 # 从收集到记住：图文指南
 
+[English screenshot and clipboard quickstart](guide.en.md) · [v0.2 原生插件指南](native-guide.md)
+
 先完成 [安装](install.md)。所有步骤的命令都可从 `Cmd+P` / `Ctrl+P` 搜索；入口名称前有 `QuickAdd:`。
 
 ## 截图变错题
